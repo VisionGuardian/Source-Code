@@ -12,7 +12,10 @@ import math
 #         elif len(coordinates) == 1:
 #             self.first = coordinates[0]
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+
 tracker = tracker.handTracker()
 
 def calcCrd(crdList):
@@ -23,11 +26,13 @@ def calcCrd(crdList):
         if label == 'Left':
             x2 = crd[1]
             y2 = crd[2]
+            z2 = crd[3]
         elif label == 'Right':
             x1 = crd[1]
             y1 = crd[2]
+            z1 = crd[3]
         idx += 1
-    return x1, y1, x2, y2
+    return x1, y1, z1, x2, y2, z2
 
 while True:
     success, img = cap.read()
@@ -37,7 +42,7 @@ while True:
     coordinates = tracker.positionFinder(img)    # has coordinates
 
     try:
-        x1, y1, x2, y2 = calcCrd(coordinates)
+        x1, y1, z1, x2, y2, z2 = calcCrd(coordinates)
 
         # display coordinates
         cv2.putText(img, str(x1)+','+str(y1), (x1, y1+20), cv2.FONT_HERSHEY_SIMPLEX, 1,
