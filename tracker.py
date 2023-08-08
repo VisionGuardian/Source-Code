@@ -22,20 +22,18 @@ class handTracker():
                self.mpDraw.draw_landmarks(img, handlms, self.mpHands.HAND_CONNECTIONS)
       return img
   
-  def positionFinder(self, img, handNo=0, draw=True):
+  def positionFinder(self, img, draw=True):
      lmlist = []
      if self.results.multi_hand_landmarks:
-        for handNo in range(len(self.results.multi_handedness)):
-            Hand = self.results.multi_hand_landmarks[handNo]
+        for idx, handedness in enumerate(self.results.multi_handedness):
+            Hand = self.results.multi_hand_landmarks[idx]
             for id, lm in enumerate(Hand.landmark):
                 h, w, c = img.shape
                 if id == 8:
                     cx, cy = int(lm.x*w), int(lm.y*h)
-                    lmlist.append([handNo, cx, cy])
+                    lmlist.append([handedness.classification[0].label, cx, cy])
                     if draw:
-                        if handNo == 0:
+                            # Blue
                             cv2.circle(img, (cx, cy), 10, (194, 67, 25), cv2.FILLED)
-                        else:
-                            cv2.circle(img, (cx, cy), 10, (25, 67, 194), cv2.FILLED)
 
      return lmlist
