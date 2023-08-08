@@ -1,2 +1,2 @@
-# Nourish-CV
-This repository includes the object detection model for the Food-101 dataset and the integration algorithm of detected label and nutrient data.
+# VisionGuardian-CV
+This repository includes the object tracking/ detection/ classification model for the eye-health self-diagnosis.
