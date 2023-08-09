@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import numpy as np
 
 class handTracker():
   def __init__(self, mode=False, maxHands=2, detectionCon=0.5, modelComplexity=1, trackCon=0.5):
@@ -37,3 +38,21 @@ class handTracker():
                             cv2.circle(img, (cx, cy), 10, (194, 67, 25), cv2.FILLED)
 
      return lmlist
+  
+
+def worldFinder(self, img, draw=True):
+    lmlist = []
+    # pseudo camera internals
+    h, w, c = img.shape
+    focal_length = w
+    center = (w/2, h/2)
+    camera_matrix = np.array(
+                            [[focal_length, 0, center[0]],
+                            [0, focal_length, center[1]],
+                            [0, 0, 1]], dtype="double"
+                            )
+    distortion = np.zeros
+
+    transformation = np.eye(4)
+
+    return lmlist
