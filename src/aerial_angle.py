@@ -23,7 +23,7 @@ def calcCrd(crdList):
         if id == 15:
             x_rarm = crd[1]
             y_rarm = crd[2]
-        elif id == 17:
+        elif id == 16:
             x_larm = crd[1]
             y_larm = crd[2]
         elif id == 11:
@@ -41,6 +41,7 @@ while True:
     img = cv2.flip(img, 1)
     img = tracker.ptsFinder(img)
     coordinates = tracker.positionFinder(img)  # has coordinates
+    print(coordinates)
 
     try:
         x_rarm, y_rarm, x_larm, y_larm, x_rsh, y_rsh, x_lsh, y_lsh = calcCrd(coordinates)
