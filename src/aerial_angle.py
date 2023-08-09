@@ -40,8 +40,7 @@ while True:
     success, img = cap.read()
     img = cv2.flip(img, 1)
     img = tracker.ptsFinder(img)
-    coordinates = tracker.positionFinder(img)  # has coordinates
-    print(coordinates)
+    coordinates = tracker.positionFinder(img)  # has coordinates  
 
     try:
         x_rarm, y_rarm, x_larm, y_larm, x_rsh, y_rsh, x_lsh, y_lsh = calcCrd(coordinates)
@@ -87,6 +86,19 @@ while True:
             2,
             cv2.LINE_AA,
         )
+
+        # Aerial angle calculation
+        arm = 0.0
+        torso = 0.0
+        # Calculate when all points are pretty much parallel
+        if abs(y_rarm - y_larm) < 3 and abs(y_rsh - y_rarm) < 5 and abs(y_lsh - y_larm) < 5:
+            # 1. Arm Length -- average of two detected arm length
+            arm = ((x_lsh - x_larm) + (x_rarm - x_rsh)) / 2
+            # 2. Torso length
+            torso = x_rsh - x_lsh
+            print(coordinates)
+            print(arm, ', ', torso)
+            break
 
     except UnboundLocalError:
         print("Upper body detection needed for calibration!")
