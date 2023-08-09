@@ -1,13 +1,21 @@
 import cv2
 import mediapipe as mp
 import time
+import platform
 
-cap = cv2.VideoCapture(0)
 mpHands = mp.solutions.hands
 hands = mpHands.Hands()
 mpDraw = mp.solutions.drawing_utils
 cTime = 0
 pTime = 0
+
+OS = platform.system()
+if OS == 'Windows':
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+elif OS == 'Linux':
+    cap = cv2.VideoCapture(-1, cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 # Hand gesture detection algorithm
 while True:

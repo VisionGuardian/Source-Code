@@ -1,18 +1,14 @@
 import tracker
 import cv2
 import math
+import platform
 
-# Use must fan out right hand in the setting now, but we can modify it later
 
-# class AngleDisplay():
-#     def __init__(self, coordinates):
-#         if len(coordinates) > 1:
-#             self.first = coordinates[0]
-#             self.second = coordinates[1]
-#         elif len(coordinates) == 1:
-#             self.first = coordinates[0]
-
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+OS = platform.system()
+if OS == 'Windows':
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+elif OS == 'Linux':
+    cap = cv2.VideoCapture(-1, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
