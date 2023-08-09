@@ -13,7 +13,9 @@ class poseTracker:
     Finds edge of the arms and torso.
     Marks (edge of) leftArm, rightArm, leftTorso, rightTorso
     '''
-    def ptsFinder(self, img, draw=False):
+    def positionFinder(self, img, draw=True):
+        lmlist = []
+
         # To improve performance, optionally mark the image as not writeable to
         # pass by reference.
         img.flags.writeable = False
@@ -25,17 +27,6 @@ class poseTracker:
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         self.results = self.pose.process(img)
 
-        if draw:
-            if self.results.pose_landmarks:
-                self.mpDraw.draw_landmarks(
-                    img,
-                    self.results.pose_landmarks,
-                    self.mpPose.POSE_CONNECTIONS
-                )
-        return img
-
-    def positionFinder(self, img, draw=True):
-        lmlist = []
         if self.results.pose_landmarks:
             for id, lm in enumerate(self.results.pose_landmarks.landmark):
                 h, w, c = img.shape
