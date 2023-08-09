@@ -27,13 +27,11 @@ def calcCrd(crdList):
         if label == "Left":
             x2 = crd[1]
             y2 = crd[2]
-            z2 = crd[3]
         elif label == "Right":
             x1 = crd[1]
             y1 = crd[2]
-            z1 = crd[3]
         idx += 1
-    return x1, y1, z1, x2, y2, z2
+    return x1, y1, x2, y2
 
 
 while True:
@@ -44,7 +42,7 @@ while True:
     coordinates = tracker.positionFinder(img)  # has coordinates
 
     try:
-        x1, y1, z1, x2, y2, z2 = calcCrd(coordinates)
+        x1, y1, x2, y2 = calcCrd(coordinates)
 
         # display coordinates
         cv2.putText(
@@ -68,17 +66,23 @@ while True:
             cv2.LINE_AA,
         )
         # Draw line
-        cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 5, cv2.FILLED)
+        cv2.line(img, (x1, y1), (x2, img.shape[0]), (255, 255, 255), 5, cv2.FILLED)
         # Draw line and angle, depending on handedness
-        cv2.line(img, (x2, y2), (x2, img.shape[1]), (255, 255, 255), 5, cv2.FILLED)
+        cv2.line(img, (x2, y2), (x2, img.shape[0]), (255, 255, 255), 5, cv2.FILLED)
+
+        print(img.shape[1])
+
 
         x1 = float(x1)
         x2 = float(x2)
         y1 = float(y1)
         y2 = float(y2)
 
+        del_x = x1-x2
+        del_y = img.shape[0] - y1
+
         try:
-            angle = int(math.atan((x2 - x1) / (y2 - y1)) * 180 / math.pi)
+            angle = int(math.atan(del_x / del_y) * 180 / math.pi)
         except ZeroDivisionError:
             angle = None
         cv2.putText(

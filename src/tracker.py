@@ -39,9 +39,9 @@ class handTracker:
                 Hand = self.results.multi_hand_landmarks[idx]
                 for id, lm in enumerate(Hand.landmark):
                     h, w, c = img.shape
-                    if id == 8:
-                        cx, cy, cz = int(lm.x * w), int(lm.y * h), int(1 / lm.z)
-                        lmlist.append([handedness.classification[0].label, cx, cy, cz])
+                    if id == 0:
+                        cx, cy = int(lm.x * w), int(lm.y * h)
+                        lmlist.append([handedness.classification[0].label, cx, cy])
                         if draw:
                             # Blue
                             cv2.circle(img, (cx, cy), 10, (194, 67, 25), cv2.FILLED)
