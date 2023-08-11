@@ -131,38 +131,3 @@ model.fit_generator(
     train_generator,
     epochs=15
 )
-
-"""# CNN(1)"""
-
-#Converting images into 3d tensors
-images = {
-    "train_c" : [],
-    "train_n" : [],
-    "test_c" : [],
-    "test_n" : []
-}
-for dirname, _, filenames in os.walk('/content/drive/MyDrive/Cataract'):
-    for filename in filenames:
-        path = os.path.join(dirname, filename)
-        if "train/cataract" in path:
-            images['train_c'].append(tf.convert_to_tensor(Image.open(path)))
-        elif "train/normal" in path:
-            images["train_n"].append(tf.convert_to_tensor(Image.open(path)))
-        elif "test/cataract" in path:
-            images["test_c"].append(tf.convert_to_tensor(Image.open(path)))
-        elif "test/normal" in path:
-            images["test_n"].append(tf.convert_to_tensor(Image.open(path)))
-
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Conv2D(32, # No. of filters
-                         (3,3), # Kernel size
-                         activation='relu',
-                         input_shape=(28, 28, 1) # inputs are 28x28 RGB images with `channels_last` format
-                         ),
-  tf.keras.layers.MaxPooling2D(2, 2),
-  tf.keras.layers.Conv2D(32, (3,3), activation='relu'),
-  tf.keras.layers.MaxPooling2D(2, 2),
-  tf.keras.layers.Flatten(),
-  tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dense(10, activation='softmax')
-])
