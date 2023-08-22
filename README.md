@@ -17,4 +17,4 @@ Ideaboard and high-level flowchart:
 ## Image Classification for Cataract Detection
 Check out the [repo](Cataract).
 
-<img width="792" alt="angle-overview" src="https://github.com/VisionGuardian/VisionGuardian-CV/assets/92397624/940f83c5-19ed-4e1e-b24b-958756b92de8">
+<img width="792" alt="cataract-overview" src="https://github.com/VisionGuardian/VisionGuardian-CV/assets/92397624/9c8a5a9a-279e-4837-b0f4-3228e3b7a5ca">
